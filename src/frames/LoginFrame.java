@@ -51,6 +51,11 @@ public class LoginFrame extends javax.swing.JFrame {
 
         registerBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         registerBtn.setText("Don't Have An Account Regioster Now");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
 
         passLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         passLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -116,6 +121,12 @@ public class LoginFrame extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        setVisible(false);
+        RegisterFrame rf = new RegisterFrame();
+        rf.setVisible(true);
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     // custom
     
