@@ -96,13 +96,15 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
     }//GEN-LAST:event_loginActionPerformed
 
     
     //custom
     
-    public void customInit(){
+    final public void customInit(){
         heading.setHorizontalAlignment(JLabel.CENTER);
     }
     
