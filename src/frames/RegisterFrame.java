@@ -13,6 +13,8 @@ import javax.swing.JLabel;
  */
 public class RegisterFrame extends javax.swing.JFrame {
 
+    javax.swing.JFrame F;
+    
     /**
      * Creates new form loginFrame
      */
@@ -20,7 +22,15 @@ public class RegisterFrame extends javax.swing.JFrame {
         initComponents();
         customInit();
     }
-
+    
+    // custom constructor
+    
+    public RegisterFrame(javax.swing.JFrame F) {
+        this.F = F;
+        initComponents();
+        customInit();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,6 +87,11 @@ public class RegisterFrame extends javax.swing.JFrame {
 
         submitReg.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         submitReg.setText("Submit");
+        submitReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitRegActionPerformed(evt);
+            }
+        });
 
         passReg.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         passReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -141,6 +156,11 @@ public class RegisterFrame extends javax.swing.JFrame {
 
     private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameActionPerformed
     }//GEN-LAST:event_firstNameActionPerformed
+
+    private void submitRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitRegActionPerformed
+        setVisible(false);
+        F.setVisible(true);
+    }//GEN-LAST:event_submitRegActionPerformed
 
  
     

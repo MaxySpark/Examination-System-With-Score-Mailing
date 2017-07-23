@@ -12,7 +12,9 @@ import javax.swing.JLabel;
  * @author maxyspark
  */
 public class LoginFrame extends javax.swing.JFrame {
-
+    
+    RegisterFrame rf = new RegisterFrame(this);
+    
     /**
      * Creates new form Login
      */
@@ -119,16 +121,16 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         setVisible(false);
-        RegisterFrame rf = new RegisterFrame();
         rf.setVisible(true);
+        rf.setLocationRelativeTo(null);
     }//GEN-LAST:event_registerBtnActionPerformed
 
-    // custom
+    // custom init
     
     final public void customInit() {
         jLabel3.setHorizontalAlignment(JLabel.CENTER);

@@ -12,7 +12,9 @@ import javax.swing.JLabel;
  * @author maxyspark
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    
+   LoginFrame lf = new LoginFrame();
+    
     /**
      * Creates new form MainFrame
      */
@@ -20,7 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         customInit();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,12 +99,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         setVisible(false);
-        LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
+        lf.setLocationRelativeTo(null);
     }//GEN-LAST:event_loginActionPerformed
 
     
-    //custom
+    // custom init
     
     final public void customInit(){
         heading.setHorizontalAlignment(JLabel.CENTER);
