@@ -142,7 +142,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     
                    //Query
                     
-                    JOptionPane.showMessageDialog(this, "Registration Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
 
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);

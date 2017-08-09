@@ -13,8 +13,6 @@ import javax.swing.JLabel;
  */
 public class AdminLoginFrame extends javax.swing.JFrame {
     
-    RegisterFrame rf = new RegisterFrame(this);
-    
     /**
      * Creates new form Login
      */
