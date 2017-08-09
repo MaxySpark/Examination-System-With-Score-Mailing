@@ -5,7 +5,11 @@
  */
 package frames;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -121,7 +125,35 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        String email,pass;
+        String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        email = emailLogin.getText();
+        pass = passLogin.getText();
+        Connection c = null;
+        Statement s;
+        if(email.matches(EMAIL_REGEX)) {
+            if(!email.equals("")&&!pass.equals("")) {
+                 try {
+//                    setVisible(false);
+//                    F.setVisible(true);
+                    Class.forName("com.mysql.jdbc.Driver");
+                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                    s=c.createStatement();
+                    
+                   //Query
+                    
+                    JOptionPane.showMessageDialog(this, "Registration Successful","Message",JOptionPane.INFORMATION_MESSAGE);
 
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try{c.close();}catch(Exception e){}
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Check The Email","Login Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
