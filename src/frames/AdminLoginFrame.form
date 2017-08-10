@@ -47,7 +47,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="passLogin" min="-2" pref="400" max="-2" attributes="0"/>
-                      <Component id="emailLogin" min="-2" pref="400" max="-2" attributes="0"/>
+                      <Component id="userLogin" min="-2" pref="400" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="59" max="32767" attributes="0"/>
               </Group>
@@ -59,7 +59,7 @@
                   <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                      <Component id="emailLogin" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
+                      <Component id="userLogin" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -79,7 +79,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Courier 10 Pitch" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Email"/>
+            <Property name="text" type="java.lang.String" value="Username"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true" thickness="3"/>
@@ -112,7 +112,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="emailLogin">
+        <Component class="javax.swing.JTextField" name="userLogin">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Courier 10 Pitch" size="24" style="1"/>

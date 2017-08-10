@@ -5,13 +5,22 @@
  */
 package frames;
 
+import admin.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author maxyspark
  */
 public class AdminLoginFrame extends javax.swing.JFrame {
+    
+    AdminDashboardFrame ad = new AdminDashboardFrame();
     
     /**
      * Creates new form Login
@@ -34,14 +43,14 @@ public class AdminLoginFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         passLogin = new javax.swing.JPasswordField();
-        emailLogin = new javax.swing.JTextField();
+        userLogin = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
-        jLabel3.setText("Email");
+        jLabel3.setText("Username");
         jLabel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
         jLabel4.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
@@ -51,8 +60,8 @@ public class AdminLoginFrame extends javax.swing.JFrame {
         passLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         passLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
-        emailLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
-        emailLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        userLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
+        userLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
         loginBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         loginBtn.setText("Login");
@@ -78,7 +87,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(passLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -87,7 +96,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                 .addGap(158, 158, 158)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -103,7 +112,38 @@ public class AdminLoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        String username,password;
+        username = userLogin.getText();
+        password = passLogin.getText();
+        Connection c = null;
+        Statement s;
+        if(!username.equals("") && !password.equals("")) {
+            try {
+                
+                Class.forName("com.mysql.jdbc.Driver");
+                c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                s=c.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM ADMIN WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'");
+//                ResultSetMetaData rd=rs.getMetaData();
+                if(rs.next()) {
+                    System.out.println(rs.getString(1));
+                    setVisible(false);
+                    ad.setVisible(true);
+                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Incorrect Username or Password","Login Error",JOptionPane.ERROR_MESSAGE);
+                }
+                
+                
 
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+            } finally {
+                try{c.close();}catch(Exception e){}
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Check The Entered Details Again","Registration Error",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_loginBtnActionPerformed
 
     // custom init
@@ -111,16 +151,16 @@ public class AdminLoginFrame extends javax.swing.JFrame {
     final public void customInit() {
         jLabel3.setHorizontalAlignment(JLabel.CENTER);
         jLabel4.setHorizontalAlignment(JLabel.CENTER);
-        emailLogin.setHorizontalAlignment(JLabel.CENTER);
+        userLogin.setHorizontalAlignment(JLabel.CENTER);
         passLogin.setHorizontalAlignment(JLabel.CENTER);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField emailLogin;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField passLogin;
+    private javax.swing.JTextField userLogin;
     // End of variables declaration//GEN-END:variables
 }

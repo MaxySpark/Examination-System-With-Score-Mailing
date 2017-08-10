@@ -13,7 +13,9 @@ import javax.swing.JLabel;
  */
 public class MainFrame extends javax.swing.JFrame {
     
-   LoginFrame lf = new LoginFrame();
+    LoginFrame lf = new LoginFrame();
+    AdminLoginFrame alf = new AdminLoginFrame();
+
     
     /**
      * Creates new form MainFrame
@@ -98,9 +100,17 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        setVisible(false);
-        lf.setVisible(true);
-        lf.setLocationRelativeTo(null);
+        
+        
+        if(admin.isSelected()) {
+            setVisible(false);
+            alf.setVisible(true);
+            alf.setLocationRelativeTo(null);
+        } else {
+            setVisible(false);
+            lf.setVisible(true);
+            lf.setLocationRelativeTo(null);
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     
