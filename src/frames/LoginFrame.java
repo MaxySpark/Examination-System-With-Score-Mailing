@@ -146,7 +146,7 @@ public class LoginFrame extends javax.swing.JFrame {
         Connection c = null;
         Statement s;
         if(email.matches(EMAIL_REGEX)) {
-            if(!email.equals("")&&!pass.equals("")) {
+            if(!email.trim().equals("")&&!pass.trim().equals("")) {
                  try {
 //                    setVisible(false);
 //                    F.setVisible(true);

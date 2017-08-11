@@ -5,7 +5,11 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,6 +61,11 @@ public class NewExamFrame extends javax.swing.JFrame {
 
         saveBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         cancelBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         cancelBtn.setText("Cancel");
@@ -122,6 +131,35 @@ public class NewExamFrame extends javax.swing.JFrame {
         ExamManagementFrame emf = new ExamManagementFrame();
         emf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String title;
+        int tq;
+        title = examTitle.getText();
+        try {
+            totalQuestion.commitEdit();
+        } catch ( java.text.ParseException e ) {  }
+        tq = (Integer) totalQuestion.getValue();
+        Connection c = null;
+        Statement s;
+        if(!title.trim().equals("")) {
+            try {
+                
+                Class.forName("com.mysql.jdbc.Driver");
+                c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                s=c.createStatement();
+//                s.executeUpdate("insert into STUDENT(FIRSTNAME,LASTNAME,EMAIL,PASSWORD) values('"+FN+"','"+LN+"','"+email+"','"+pass+"')");
+                JOptionPane.showMessageDialog(this, "Registration Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+            } finally {
+                try{c.close();}catch(Exception e){}
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Check The Entered Details Again","Registration Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     
     // custom init

@@ -184,7 +184,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         pass = passReg.getText();
         Connection c = null;
         Statement s;
-        if(email.matches(EMAIL_REGEX) && !FN.equals("") && !LN.equals("") && !pass.equals("")) {
+        if(email.matches(EMAIL_REGEX) && !FN.trim().equals("") && !LN.trim().trim().equals("") && !pass.equals("")) {
             try {
                 setVisible(false);
                 F.setVisible(true);

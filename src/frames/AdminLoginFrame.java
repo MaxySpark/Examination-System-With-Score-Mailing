@@ -140,7 +140,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
         password = passLogin.getText();
         Connection c = null;
         Statement s;
-        if(!username.equals("") && !password.equals("")) {
+        if(!username.trim().equals("") && !password.trim().equals("")) {
             try {
                 
                 Class.forName("com.mysql.jdbc.Driver");
