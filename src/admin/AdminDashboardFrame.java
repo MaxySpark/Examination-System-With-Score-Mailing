@@ -14,6 +14,8 @@ import javax.swing.JLabel;
  */
 public class AdminDashboardFrame extends javax.swing.JFrame {
 
+    ExamManagementFrame emf = new ExamManagementFrame();
+    
     /**
      * Creates new form AdminDashboardFrame
      */
@@ -58,6 +60,11 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
 
         manageExams.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         manageExams.setText("Manage Exams");
+        manageExams.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageExamsActionPerformed(evt);
+            }
+        });
 
         manageStudents.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         manageStudents.setText("Manage Students");
@@ -108,6 +115,10 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
         mf.setVisible(true);
         mf.setLocationRelativeTo(null);;
     }//GEN-LAST:event_logOutBtnActionPerformed
+
+    private void manageExamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageExamsActionPerformed
+        emf.setVisible(true);
+    }//GEN-LAST:event_manageExamsActionPerformed
 
     
         
