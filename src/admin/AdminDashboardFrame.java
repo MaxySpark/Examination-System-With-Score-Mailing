@@ -113,7 +113,6 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
         setVisible(false);
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
-        mf.setLocationRelativeTo(null);;
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void manageExamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageExamsActionPerformed

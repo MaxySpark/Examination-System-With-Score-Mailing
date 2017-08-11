@@ -180,7 +180,6 @@ public class LoginFrame extends javax.swing.JFrame {
         setVisible(false);
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
-        mf.setLocationRelativeTo(null);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     // custom init

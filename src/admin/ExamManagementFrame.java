@@ -12,7 +12,6 @@ import javax.swing.JLabel;
  * @author debasmit
  */
 public class ExamManagementFrame extends javax.swing.JFrame {
-    NewExamFrame nef = new NewExamFrame();
     
     /**
      * Creates new form ExamManagementFrame
@@ -182,6 +181,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
     private void newExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newExamActionPerformed
         this.setVisible(false);
+        NewExamFrame nef = new NewExamFrame();
         nef.setVisible(true);
     }//GEN-LAST:event_newExamActionPerformed
 

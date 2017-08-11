@@ -12,9 +12,7 @@ import javax.swing.JLabel;
  * @author Elegant Moments
  */
 public class NewExamFrame extends javax.swing.JFrame {
-    
-    ExamManagementFrame emf = new ExamManagementFrame();
-    
+       
     /**
      * Creates new form NewExamFrame
      */
@@ -121,6 +119,7 @@ public class NewExamFrame extends javax.swing.JFrame {
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
+        ExamManagementFrame emf = new ExamManagementFrame();
         emf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
