@@ -116,6 +116,7 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void manageExamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageExamsActionPerformed
+        this.setVisible(false);
         emf.setVisible(true);
     }//GEN-LAST:event_manageExamsActionPerformed
 
