@@ -116,6 +116,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passLoginActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="userLogin">
           <Properties>
@@ -128,6 +131,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userLoginActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="loginBtn">
           <Properties>

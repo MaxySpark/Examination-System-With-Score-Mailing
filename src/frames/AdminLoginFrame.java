@@ -60,9 +60,19 @@ public class AdminLoginFrame extends javax.swing.JFrame {
 
         passLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         passLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        passLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passLoginActionPerformed(evt);
+            }
+        });
 
         userLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         userLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        userLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userLoginActionPerformed(evt);
+            }
+        });
 
         loginBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         loginBtn.setText("Login");
@@ -165,6 +175,14 @@ public class AdminLoginFrame extends javax.swing.JFrame {
         mf.setVisible(true);
         mf.setLocationRelativeTo(null);
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void userLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userLoginActionPerformed
+        passLogin.requestFocus();
+    }//GEN-LAST:event_userLoginActionPerformed
+
+    private void passLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passLoginActionPerformed
 
     // custom init
     

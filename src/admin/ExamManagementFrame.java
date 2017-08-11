@@ -12,7 +12,8 @@ import javax.swing.JLabel;
  * @author debasmit
  */
 public class ExamManagementFrame extends javax.swing.JFrame {
-
+    NewExamFrame nef = new NewExamFrame();
+    
     /**
      * Creates new form ExamManagementFrame
      */
@@ -63,11 +64,16 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
         newExam.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         newExam.setText("Start a new Exam");
+        newExam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newExamActionPerformed(evt);
+            }
+        });
 
         updateBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         updateBtn.setText("Update");
 
-        selectExam.setFont(new java.awt.Font("Courier 10 Pitch", 1, 15)); // NOI18N
+        selectExam.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
         selectExam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
@@ -117,8 +123,8 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel5.setText("Exam Lists");
 
-        setTimer.setFont(new java.awt.Font("Courier 10 Pitch", 1, 15)); // NOI18N
-        setTimer.setModel(new javax.swing.SpinnerNumberModel());
+        setTimer.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
+        setTimer.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,6 +179,11 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void newExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newExamActionPerformed
+        this.setVisible(false);
+        nef.setVisible(true);
+    }//GEN-LAST:event_newExamActionPerformed
 
     
     // custom init
