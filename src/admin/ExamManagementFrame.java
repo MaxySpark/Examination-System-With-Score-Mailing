@@ -87,8 +87,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         examTable.setFont(new java.awt.Font("Courier 10 Pitch", 1, 15)); // NOI18N
         examTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "ID", "Exam Name"
@@ -166,9 +165,8 @@ public class ExamManagementFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(newExam, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                                     .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(setTimer, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(selectExam, javax.swing.GroupLayout.Alignment.TRAILING, 0, 135, Short.MAX_VALUE))))
+                                    .addComponent(setTimer, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(selectExam, javax.swing.GroupLayout.Alignment.TRAILING, 0, 211, Short.MAX_VALUE)))
                             .addComponent(cancelBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(75, 75, 75))
         );
@@ -199,7 +197,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
                         .addGap(71, 71, 71))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(editExam, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -223,6 +221,11 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         adf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
+    // load exam list
+    
+    private void loadExamList() {
+        // load exam title from database and display in table
+    }
     
     // custom init
     

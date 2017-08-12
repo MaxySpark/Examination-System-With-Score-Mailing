@@ -148,16 +148,21 @@ public class NewExamFrame extends javax.swing.JFrame {
                 Class.forName("com.mysql.jdbc.Driver");
                 c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
                 s=c.createStatement();
-//                s.executeUpdate("insert into STUDENT(FIRSTNAME,LASTNAME,EMAIL,PASSWORD) values('"+FN+"','"+LN+"','"+email+"','"+pass+"')");
-                JOptionPane.showMessageDialog(this, "Registration Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+                s.executeUpdate("INSERT INTO EXAMS(TITLE,TOTALQUESTION) VALUES('"+title+"',"+tq+")");
+                JOptionPane.showMessageDialog(this, "New Exam Added","Message",JOptionPane.INFORMATION_MESSAGE);
 
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
             } finally {
                 try{c.close();}catch(Exception e){}
+                
+                this.setVisible(false);
+                ExamManagementFrame emf = new ExamManagementFrame();
+                emf.setVisible(true);
+                
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please Check The Entered Details Again","Registration Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please Check The Entered Details Again","New Exam Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
