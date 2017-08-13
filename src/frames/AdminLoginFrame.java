@@ -147,7 +147,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                 c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
                 s=c.createStatement();
                 ResultSet rs = s.executeQuery("SELECT * FROM ADMIN WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'");
-//                ResultSetMetaData rd=rs.getMetaData();
+
                 if(rs.next()) {
                     System.out.println(rs.getString(1));
                     setVisible(false);
@@ -181,7 +181,38 @@ public class AdminLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_userLoginActionPerformed
 
     private void passLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passLoginActionPerformed
-        // TODO add your handling code here:
+        String username,password;
+        username = userLogin.getText();
+        password = passLogin.getText();
+        Connection c = null;
+        Statement s;
+        if(!username.trim().equals("") && !password.trim().equals("")) {
+            try {
+                
+                Class.forName("com.mysql.jdbc.Driver");
+                c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                s=c.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM ADMIN WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'");
+
+                if(rs.next()) {
+                    System.out.println(rs.getString(1));
+                    setVisible(false);
+                    ad.setVisible(true);
+                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Incorrect Username or Password","Login Error",JOptionPane.ERROR_MESSAGE);
+                }
+                
+                
+
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+            } finally {
+                try{c.close();}catch(Exception e){}
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Check The Entered Details Again","Registration Error",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_passLoginActionPerformed
 
     // custom init

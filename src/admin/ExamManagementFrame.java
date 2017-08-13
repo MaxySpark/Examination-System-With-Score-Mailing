@@ -5,7 +5,15 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,6 +28,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         customInit();
+        loadExamList();
     }
 
     /**
@@ -47,6 +56,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         editExam = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cancelBtn = new javax.swing.JButton();
+        cExam = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,8 +84,14 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
         updateBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         selectExam.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
+        selectExam.setMaximumRowCount(0);
         selectExam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1" }));
 
         jLabel2.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
@@ -90,14 +106,14 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Exam Name"
+                "Sl No", "Id", "Exam Name", "Total Q's"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -109,12 +125,21 @@ public class ExamManagementFrame extends javax.swing.JFrame {
             }
         });
         examTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        examTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                examTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(examTable);
         if (examTable.getColumnModel().getColumnCount() > 0) {
-            examTable.getColumnModel().getColumn(0).setMinWidth(35);
-            examTable.getColumnModel().getColumn(0).setPreferredWidth(35);
-            examTable.getColumnModel().getColumn(0).setMaxWidth(35);
-            examTable.getColumnModel().getColumn(1).setResizable(false);
+            examTable.getColumnModel().getColumn(0).setMinWidth(45);
+            examTable.getColumnModel().getColumn(0).setPreferredWidth(45);
+            examTable.getColumnModel().getColumn(0).setMaxWidth(45);
+            examTable.getColumnModel().getColumn(1).setMinWidth(35);
+            examTable.getColumnModel().getColumn(1).setMaxWidth(35);
+            examTable.getColumnModel().getColumn(2).setResizable(false);
+            examTable.getColumnModel().getColumn(3).setMinWidth(80);
+            examTable.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         heading.setFont(new java.awt.Font("Courier 10 Pitch", 1, 36)); // NOI18N
@@ -141,6 +166,9 @@ public class ExamManagementFrame extends javax.swing.JFrame {
             }
         });
 
+        cExam.setFont(new java.awt.Font("Courier 10 Pitch", 1, 19)); // NOI18N
+        cExam.setForeground(new java.awt.Color(237, 23, 68));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,19 +183,25 @@ public class ExamManagementFrame extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(editExam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(newExam, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                                    .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(setTimer, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(selectExam, javax.swing.GroupLayout.Alignment.TRAILING, 0, 211, Short.MAX_VALUE)))
-                            .addComponent(cancelBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(newExam, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(setTimer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(selectExam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cExam, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(75, 75, 75))
         );
         jPanel1Layout.setVerticalGroup(
@@ -182,22 +216,23 @@ public class ExamManagementFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cExam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(selectExam, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(setTimer, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(59, 59, 59)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(editExam, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -221,10 +256,87 @@ public class ExamManagementFrame extends javax.swing.JFrame {
         adf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
+    private void examTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examTableMouseClicked
+        int row = examTable.getSelectedRow();
+        TableModel model = examTable.getModel();
+        String examname = model.getValueAt(row, 1).toString();
+        System.out.println(examname);
+    }//GEN-LAST:event_examTableMouseClicked
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        JComboBox examBox = selectExam;
+        int sel_id = (int) examBox.getSelectedItem();
+        int time;
+        try {
+            setTimer.commitEdit();
+        } catch ( java.text.ParseException e ) {  }
+        time = (Integer) setTimer.getValue();
+
+        Connection c = null;
+        Statement s;    
+        try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+            s=c.createStatement();
+
+         //Query
+            s.executeUpdate("DELETE FROM CURRENTEXAM");
+            s.executeUpdate("INSERT INTO CURRENTEXAM VALUES("+sel_id+","+time+")");
+            ResultSet ce = s.executeQuery("SELECT * FROM CURRENTEXAM");
+            while(ce.next()) {
+                cExam.setText("Current Exam Id : "+ce.getInt("ID")+" and Time : "+ce.getInt("TIME")+" Mins");
+            }
+            JOptionPane.showMessageDialog(this, "Current Exam Set to \nExam Id = "+sel_id+"\nDuration = "+time+" Mins","Message",JOptionPane.INFORMATION_MESSAGE);
+
+      } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+            try{c.close();}catch(Exception e){}
+      }  
+    }//GEN-LAST:event_updateBtnActionPerformed
+
     // load exam list
     
     private void loadExamList() {
         // load exam title from database and display in table
+        JComboBox examBox = selectExam;
+        examBox.removeAllItems();
+        Connection c = null;
+        Statement s;
+                  try {
+                    
+                    
+                    
+                    Class.forName("com.mysql.jdbc.Driver");
+                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                    s=c.createStatement();
+                    int row = 0;
+                    int x=0;
+
+                   //Query
+                   ResultSet ce = s.executeQuery("SELECT * FROM CURRENTEXAM");
+                   while(ce.next()) {
+                       cExam.setText("Current Exam Id : "+ce.getInt("ID")+" and Time : "+ce.getInt("TIME")+" Mins");
+                   }
+                   ResultSet rs = s.executeQuery("SELECT * FROM EXAMS"); 
+
+                   while(rs.next()) {
+                        ((DefaultTableModel)examTable.getModel()).addRow(new Object[]{});
+                        ((DefaultTableModel)examTable.getModel()).setValueAt(++x, row, 0);
+                        ((DefaultTableModel)examTable.getModel()).setValueAt(rs.getInt("ID"), row, 1);
+                        ((DefaultTableModel)examTable.getModel()).setValueAt(rs.getString("TITLE"), row, 2);
+                        ((DefaultTableModel)examTable.getModel()).setValueAt(rs.getInt("TOTALQUESTION"), row, 3);
+                        examBox.addItem(rs.getInt("ID"));
+                        
+                        row++;
+                   }
+
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try{c.close();}catch(Exception e){}
+                }  
     }
     
     // custom init
@@ -234,6 +346,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cExam;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton editExam;
     private javax.swing.JTable examTable;
