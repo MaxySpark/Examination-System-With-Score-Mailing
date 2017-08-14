@@ -148,7 +148,7 @@ public class LoginFrame extends javax.swing.JFrame {
         if(email.matches(EMAIL_REGEX)) {
             if(!email.trim().equals("")&&!pass.trim().equals("")) {
                  try {
-//                    setVisible(false);
+//                    dispose();
 //                    F.setVisible(true);
                     Class.forName("com.mysql.jdbc.Driver");
                     c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
@@ -171,13 +171,13 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        setVisible(false);
+        dispose();
         rf.setVisible(true);
         rf.setLocationRelativeTo(null);
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        setVisible(false);
+        dispose();
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed

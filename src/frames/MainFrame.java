@@ -104,11 +104,11 @@ public class MainFrame extends javax.swing.JFrame {
         
         
         if(admin.isSelected()) {
-            setVisible(false);
+            dispose();
             alf.setVisible(true);
             alf.setLocationRelativeTo(null);
         } else {
-            setVisible(false);
+            dispose();
             lf.setVisible(true);
             lf.setLocationRelativeTo(null);
         }

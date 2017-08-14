@@ -154,6 +154,11 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
         editExam.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         editExam.setText("Edit Exam Details and Questions");
+        editExam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editExamActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel1.setText("Set Current Exam");
@@ -245,22 +250,22 @@ public class ExamManagementFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newExamActionPerformed
-        this.setVisible(false);
+//        this.dispose();
+        this.dispose();
         NewExamFrame nef = new NewExamFrame();
         nef.setVisible(true);
     }//GEN-LAST:event_newExamActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         AdminDashboardFrame adf = new AdminDashboardFrame();
-        this.setVisible(false);
+        this.dispose();
         adf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void examTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examTableMouseClicked
         int row = examTable.getSelectedRow();
-        TableModel model = examTable.getModel();
-        String examname = model.getValueAt(row, 1).toString();
-        System.out.println(examname);
+        selecetedId = Integer.parseInt(examTable.getValueAt(row, 1).toString());
+        editExam.setEnabled(true);
     }//GEN-LAST:event_examTableMouseClicked
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
@@ -295,6 +300,11 @@ public class ExamManagementFrame extends javax.swing.JFrame {
             try{c.close();}catch(Exception e){}
       }  
     }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void editExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editExamActionPerformed
+        ExamQuesionAddFrame eqaf = new ExamQuesionAddFrame(selecetedId);
+        eqaf.setVisible(true);
+    }//GEN-LAST:event_editExamActionPerformed
 
     // load exam list
     
@@ -343,8 +353,11 @@ public class ExamManagementFrame extends javax.swing.JFrame {
     
     final public void customInit(){
         heading.setHorizontalAlignment(JLabel.CENTER);
+        editExam.setEnabled(false);
     }
 
+    int selecetedId=0;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cExam;
     private javax.swing.JButton cancelBtn;

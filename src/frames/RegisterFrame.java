@@ -186,7 +186,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         Statement s;
         if(email.matches(EMAIL_REGEX) && !FN.trim().equals("") && !LN.trim().trim().equals("") && !pass.equals("")) {
             try {
-                setVisible(false);
+                dispose();
                 F.setVisible(true);
                 Class.forName("com.mysql.jdbc.Driver");
                 c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
@@ -206,7 +206,7 @@ public class RegisterFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_submitRegActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        setVisible(false);
+        dispose();
         F.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 

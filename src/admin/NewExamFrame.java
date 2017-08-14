@@ -127,7 +127,8 @@ public class NewExamFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        this.setVisible(false);
+//        this.dispose();
+        this.dispose();
         ExamManagementFrame emf = new ExamManagementFrame();
         emf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
@@ -156,7 +157,7 @@ public class NewExamFrame extends javax.swing.JFrame {
             } finally {
                 try{c.close();}catch(Exception e){}
                 
-                this.setVisible(false);
+                this.dispose();
                 ExamManagementFrame emf = new ExamManagementFrame();
                 emf.setVisible(true);
                 

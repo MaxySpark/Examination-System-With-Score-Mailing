@@ -9,7 +9,6 @@ import admin.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -150,7 +149,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
 
                 if(rs.next()) {
                     System.out.println(rs.getString(1));
-                    setVisible(false);
+                    dispose();
                     ad.setVisible(true);
                     JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -170,7 +169,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        setVisible(false);
+        dispose();
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
         mf.setLocationRelativeTo(null);
@@ -196,7 +195,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
 
                 if(rs.next()) {
                     System.out.println(rs.getString(1));
-                    setVisible(false);
+                    dispose();
                     ad.setVisible(true);
                     JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
                 } else {

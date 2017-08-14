@@ -110,13 +110,13 @@ public class AdminDashboardFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
-        setVisible(false);
+        dispose();
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void manageExamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageExamsActionPerformed
-        this.setVisible(false);
+        this.dispose();
         emf.setVisible(true);
     }//GEN-LAST:event_manageExamsActionPerformed
 
