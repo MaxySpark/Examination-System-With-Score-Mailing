@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -250,7 +249,6 @@ public class ExamManagementFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newExamActionPerformed
-//        this.dispose();
         this.dispose();
         NewExamFrame nef = new NewExamFrame();
         nef.setVisible(true);
@@ -302,6 +300,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void editExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editExamActionPerformed
+        this.dispose();
         ExamQuesionAddFrame eqaf = new ExamQuesionAddFrame(selecetedId);
         eqaf.setVisible(true);
     }//GEN-LAST:event_editExamActionPerformed

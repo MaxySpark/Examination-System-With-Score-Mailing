@@ -48,11 +48,11 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         heading = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        examTitle = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        totalQuestion = new javax.swing.JSpinner();
+        saveOnly = new javax.swing.JButton();
+        closeBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -66,23 +66,29 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel1.setText("Exam Title");
 
-        jTextField1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        examTitle.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel2.setText("Total Questions");
 
-        jSpinner1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
+        totalQuestion.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
+        totalQuestion.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
 
-        jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jButton1.setText("Save Only");
+        saveOnly.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        saveOnly.setText("Save Only");
+        saveOnly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveOnlyActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jButton2.setText("Cancel");
+        closeBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        closeBtn.setText("Close");
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jButton3.setText("Save and Edit Questions");
@@ -102,19 +108,19 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1))
+                            .addComponent(examTitle))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(totalQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                            .addComponent(saveOnly, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(100, 100, 100))
         );
         jPanel1Layout.setVerticalGroup(
@@ -125,18 +131,18 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(examTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                    .addComponent(totalQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                 .addGap(77, 77, 77)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(closeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
@@ -146,45 +152,42 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void saveOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveOnlyActionPerformed
+        String title = examTitle.getText();
+        int total;
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ExamQuesionAddFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ExamQuesionAddFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ExamQuesionAddFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ExamQuesionAddFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+            totalQuestion.commitEdit();
+        } catch ( java.text.ParseException e ) {  }
+        total = (Integer) totalQuestion.getValue();
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ExamQuesionAddFrame().setVisible(true);
-            }
-        });
-    }
+          s.executeUpdate("UPDATE EXAMS SET TITLE='"+title+"',TOTALQUESTION="+total+" WHERE ID="+selectedId);
+          JOptionPane.showMessageDialog(this, "Exam Title and Total Question Updated","Update",JOptionPane.ERROR_MESSAGE);
+         //Query
+         ResultSet rs = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
+         if(rs.next()) {
+             examTitle.setText(rs.getString("TITLE"));
+             totalQuestion.setValue(rs.getInt("TOTALQUESTION"));
+         }
+
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.INFORMATION_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      } 
+    }//GEN-LAST:event_saveOnlyActionPerformed
+
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        this.dispose();
+        ExamManagementFrame emf = new ExamManagementFrame();
+        emf.setVisible(true);
+    }//GEN-LAST:event_closeBtnActionPerformed
+
     // load exam list
     
     private void loadExam() {
@@ -192,21 +195,15 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         Connection c = null;
         Statement s;
                   try {
-                    
-                    
-                    
                     Class.forName("com.mysql.jdbc.Driver");
                     c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
                     s=c.createStatement();
-                    int row = 0;
-                    int x=0;
 
                    //Query
                    ResultSet rs = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
                    if(rs.next()) {
-                       System.out.println(rs.getInt("ID"));
-                       System.out.println(rs.getString("TITLE"));
-
+                       examTitle.setText(rs.getString("TITLE"));
+                       totalQuestion.setValue(rs.getInt("TOTALQUESTION"));
                    }
                    
                 } catch(Exception e) {
@@ -225,15 +222,15 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
     int selectedId;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeBtn;
+    private javax.swing.JTextField examTitle;
     private javax.swing.JLabel heading;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton saveOnly;
+    private javax.swing.JSpinner totalQuestion;
     // End of variables declaration//GEN-END:variables
 }

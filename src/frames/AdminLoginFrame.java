@@ -151,7 +151,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                     System.out.println(rs.getString(1));
                     dispose();
                     ad.setVisible(true);
-                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+//                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Incorrect Username or Password","Login Error",JOptionPane.ERROR_MESSAGE);
                 }
@@ -197,7 +197,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                     System.out.println(rs.getString(1));
                     dispose();
                     ad.setVisible(true);
-                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+//                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Incorrect Username or Password","Login Error",JOptionPane.ERROR_MESSAGE);
                 }
