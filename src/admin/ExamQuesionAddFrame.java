@@ -54,7 +54,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         saveOnly = new javax.swing.JButton();
         closeBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        deleteExam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -74,7 +74,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         totalQuestion.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
         totalQuestion.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
 
-        saveOnly.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        saveOnly.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         saveOnly.setText("Save Only");
         saveOnly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +82,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
             }
         });
 
-        closeBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        closeBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         closeBtn.setText("Close");
         closeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,11 +90,16 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         jButton3.setText("Save and Edit Questions");
 
-        jButton4.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jButton4.setText("Delete");
+        deleteExam.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        deleteExam.setText("Delete");
+        deleteExam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteExamActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,7 +120,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                             .addComponent(totalQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deleteExam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(saveOnly, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -143,7 +148,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(closeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(deleteExam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -167,7 +172,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
           s=c.createStatement();
 
           s.executeUpdate("UPDATE EXAMS SET TITLE='"+title+"',TOTALQUESTION="+total+" WHERE ID="+selectedId);
-          JOptionPane.showMessageDialog(this, "Exam Title and Total Question Updated","Update",JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Exam Title and Total Question Updated","Update",JOptionPane.INFORMATION_MESSAGE);
          //Query
          ResultSet rs = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
          if(rs.next()) {
@@ -176,7 +181,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
          }
 
       } catch(Exception e) {
-          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.INFORMATION_MESSAGE);
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
       } finally {
           try{c.close();}catch(Exception e){}
       } 
@@ -187,6 +192,33 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         ExamManagementFrame emf = new ExamManagementFrame();
         emf.setVisible(true);
     }//GEN-LAST:event_closeBtnActionPerformed
+
+    private void deleteExamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteExamActionPerformed
+        
+        String ObjButtons[] = {"Yes","No"};
+        int PromptResult = JOptionPane.showOptionDialog(null,"Are you sure you want to Delete this Exam?","Examination System",JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,ObjButtons,ObjButtons[1]);
+        if(PromptResult==JOptionPane.YES_OPTION)
+        {
+            Connection c = null;
+            Statement s;
+            try {
+              Class.forName("com.mysql.jdbc.Driver");
+              c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+              s=c.createStatement();
+
+              s.executeUpdate("DELETE FROM EXAMS WHERE ID="+selectedId);
+              this.dispose();
+              ExamManagementFrame emf = new ExamManagementFrame();
+              emf.setVisible(true);
+              JOptionPane.showMessageDialog(null, "Exam Deleted","Update",JOptionPane.ERROR_MESSAGE);
+
+          } catch(Exception e) {
+              JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+          } finally {
+              try{c.close();}catch(Exception e){}
+          } 
+        }    
+    }//GEN-LAST:event_deleteExamActionPerformed
 
     // load exam list
     
@@ -223,10 +255,10 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeBtn;
+    private javax.swing.JButton deleteExam;
     private javax.swing.JTextField examTitle;
     private javax.swing.JLabel heading;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
