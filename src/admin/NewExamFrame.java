@@ -7,6 +7,7 @@ package admin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -151,7 +152,10 @@ public class NewExamFrame extends javax.swing.JFrame {
                 s=c.createStatement();
                 s.executeUpdate("INSERT INTO EXAMS(TITLE,TOTALQUESTION) VALUES('"+title+"',"+tq+")");
                 JOptionPane.showMessageDialog(this, "New Exam Added","Message",JOptionPane.INFORMATION_MESSAGE);
-
+                ResultSet rs = s.executeQuery("SELECT ID FROM EXAMS");
+                if(rs.last()) {
+                    s.executeUpdate("CREATE TABLE EXAM_"+rs.getInt("ID")+"(ID INT PRIMARY KEY,Q VARCHAR(150),A VARCHAR(100),B VARCHAR(100),C VARCHAR(100),D VARCHAR(100),CA VARCHAR(5))");
+                }
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
             } finally {

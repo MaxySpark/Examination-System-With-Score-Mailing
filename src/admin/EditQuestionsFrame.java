@@ -5,7 +5,12 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +32,7 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         customInit();
+        loadQuestions();
     }
 
     /**
@@ -94,12 +100,12 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("C");
+        jLabel6.setText("D");
         jLabel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
         jLabel7.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("D");
+        jLabel7.setText("C");
         jLabel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
         aOption.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
@@ -212,10 +218,11 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
                     .addComponent(dOption, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(correctAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(correctAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
@@ -234,39 +241,38 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
         eqaf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    // load exam list
+    
+    private void loadQuestions() {
+        Connection c = null;
+        Statement s;
+                  try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                    s=c.createStatement();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditQuestionsFrame().setVisible(true);
-            }
-        });
+                   //Query
+                   ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
+                   r.next();
+                   totalRow = r.getInt("TOTALQUESTION");
+                      System.out.println(totalRow);
+                   ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId);
+                   if(rs.next()) {
+                        question.setText(rs.getString("Q"));
+                        aOption.setText(rs.getString("A"));
+                        bOption.setText(rs.getString("B"));
+                        cOption.setText(rs.getString("C"));
+                        dOption.setText(rs.getString("D"));
+                        correctAnswer.setSelectedItem(rs.getString("CA"));
+
+                       
+                   }
+                   
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try{c.close();}catch(Exception e){}
+                }  
     }
     
     // custom init
@@ -274,7 +280,7 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
     final public void customInit(){
         heading.setHorizontalAlignment(JLabel.CENTER);
     }
-    
+    int totalRow;
     int selectedId;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

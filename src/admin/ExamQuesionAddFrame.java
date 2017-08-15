@@ -207,15 +207,16 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
             Connection c = null;
             Statement s;
             try {
-              Class.forName("com.mysql.jdbc.Driver");
-              c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
-              s=c.createStatement();
+                Class.forName("com.mysql.jdbc.Driver");
+                c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                s=c.createStatement();
 
-              s.executeUpdate("DELETE FROM EXAMS WHERE ID="+selectedId);
-              this.dispose();
-              ExamManagementFrame emf = new ExamManagementFrame();
-              emf.setVisible(true);
-              JOptionPane.showMessageDialog(null, "Exam Deleted","Update",JOptionPane.ERROR_MESSAGE);
+                s.executeUpdate("DELETE FROM EXAMS WHERE ID="+selectedId);
+                s.executeUpdate("DROP TABLE EXAM_"+selectedId);
+                this.dispose();
+                ExamManagementFrame emf = new ExamManagementFrame();
+                emf.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Exam Deleted","Update",JOptionPane.ERROR_MESSAGE);
 
           } catch(Exception e) {
               JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
@@ -226,7 +227,9 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteExamActionPerformed
 
     private void editQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQuestionsActionPerformed
-        
+        this.dispose();
+        EditQuestionsFrame eqf = new EditQuestionsFrame(selectedId);
+        eqf.setVisible(true);
     }//GEN-LAST:event_editQuestionsActionPerformed
 
     // load exam list
