@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -279,6 +280,13 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
     
     final public void customInit(){
         heading.setHorizontalAlignment(JLabel.CENTER);
+        // Pading Text Fields
+        question.setBorder(BorderFactory.createCompoundBorder(question.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
+        aOption.setBorder(BorderFactory.createCompoundBorder(aOption.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
+        bOption.setBorder(BorderFactory.createCompoundBorder(bOption.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
+        cOption.setBorder(BorderFactory.createCompoundBorder(cOption.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
+        dOption.setBorder(BorderFactory.createCompoundBorder(dOption.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
+
     }
     int totalRow;
     int selectedId;
