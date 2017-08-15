@@ -53,7 +53,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         totalQuestion = new javax.swing.JSpinner();
         saveOnly = new javax.swing.JButton();
         closeBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        editQuestions = new javax.swing.JButton();
         deleteExam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,8 +90,13 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
-        jButton3.setText("Save and Edit Questions");
+        editQuestions.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        editQuestions.setText("Save and Edit Questions");
+        editQuestions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editQuestionsActionPerformed(evt);
+            }
+        });
 
         deleteExam.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         deleteExam.setText("Delete");
@@ -124,7 +129,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                             .addComponent(saveOnly, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editQuestions, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(100, 100, 100))
         );
@@ -144,7 +149,7 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editQuestions, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(closeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
@@ -220,6 +225,10 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         }    
     }//GEN-LAST:event_deleteExamActionPerformed
 
+    private void editQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQuestionsActionPerformed
+        
+    }//GEN-LAST:event_editQuestionsActionPerformed
+
     // load exam list
     
     private void loadExam() {
@@ -256,9 +265,9 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeBtn;
     private javax.swing.JButton deleteExam;
+    private javax.swing.JButton editQuestions;
     private javax.swing.JTextField examTitle;
     private javax.swing.JLabel heading;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
