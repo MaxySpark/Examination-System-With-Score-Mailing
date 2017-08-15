@@ -323,6 +323,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Save"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="nextBtn">
           <Properties>
@@ -331,6 +334,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Save and Next"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancelBtn">
           <Properties>

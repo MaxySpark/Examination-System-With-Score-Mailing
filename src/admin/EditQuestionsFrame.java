@@ -125,9 +125,19 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
 
         saveBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         nextBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         nextBtn.setText("Save and Next");
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
 
         cancelBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         cancelBtn.setText("Cancel");
@@ -242,38 +252,99 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
         eqaf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String Q,A,B,C,D,CA,QN;
+        QN = questionNumber.getText();
+        Q = question.getText();
+        A = aOption.getText();
+        B = bOption.getText();
+        C = cOption.getText();
+        D = dOption.getText();
+        CA = correctAnswer.getSelectedItem().toString();
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId+" WHERE ID="+currentRow);
+          if(rs.next()) {
+              s.executeUpdate("UPDATE EXAM_"+selectedId+" SET Q='"+Q+"',A='"+A+"',B='"+B+"',C='"+C+"',D='"+D+"',CA='"+CA+"' WHERE ID="+QN);
+          } else {
+              s.executeUpdate("INSERT INTO EXAM_"+selectedId+" VALUES("+QN+",'"+Q+"','"+A+"','"+B+"','"+C+"','"+D+"','"+CA+"')");
+          }
+          loadQuestions();
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        String Q,A,B,C,D,CA,QN;
+        QN = questionNumber.getText();
+        Q = question.getText();
+        A = aOption.getText();
+        B = bOption.getText();
+        C = cOption.getText();
+        D = dOption.getText();
+        CA = correctAnswer.getSelectedItem().toString();
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId+" WHERE ID="+currentRow);
+          if(rs.next()) {
+              s.executeUpdate("UPDATE EXAM_"+selectedId+" SET Q='"+Q+"',A='"+A+"',B='"+B+"',C='"+C+"',D='"+D+"',CA='"+CA+"' WHERE ID="+QN);
+          } else {
+              s.executeUpdate("INSERT INTO EXAM_"+selectedId+" VALUES("+QN+",'"+Q+"','"+A+"','"+B+"','"+C+"','"+D+"','"+CA+"')");
+          }
+          currentRow += 1;
+          loadQuestions();
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }
+    }//GEN-LAST:event_nextBtnActionPerformed
+
     // load exam list
     
     private void loadQuestions() {
         Connection c = null;
         Statement s;
-                  try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
-                    s=c.createStatement();
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
 
-                   //Query
-                   ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
-                   r.next();
-                   totalRow = r.getInt("TOTALQUESTION");
-                      System.out.println(totalRow);
-                   ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId);
-                   if(rs.next()) {
-                        question.setText(rs.getString("Q"));
-                        aOption.setText(rs.getString("A"));
-                        bOption.setText(rs.getString("B"));
-                        cOption.setText(rs.getString("C"));
-                        dOption.setText(rs.getString("D"));
-                        correctAnswer.setSelectedItem(rs.getString("CA"));
+         //Query
+         ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
+         r.next();
+         totalRow = r.getInt("TOTALQUESTION");
 
-                       
-                   }
-                   
-                } catch(Exception e) {
-                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-                } finally {
-                    try{c.close();}catch(Exception e){}
-                }  
+         ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId+" WHERE ID="+currentRow);
+         if(rs.next()) {
+              currentRow = rs.getInt("ID");
+              questionNumber.setText(Integer.toString(currentRow));
+              question.setText(rs.getString("Q"));
+              aOption.setText(rs.getString("A"));
+              bOption.setText(rs.getString("B"));
+              cOption.setText(rs.getString("C"));
+              dOption.setText(rs.getString("D"));
+              correctAnswer.setSelectedItem(rs.getString("CA"));
+         } else  {
+             questionNumber.setText(Integer.toString(currentRow));                 
+         }
+
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }  
     }
     
     // custom init
@@ -290,6 +361,7 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
     }
     int totalRow;
     int selectedId;
+    int currentRow=1;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aOption;
