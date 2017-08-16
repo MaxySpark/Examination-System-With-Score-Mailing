@@ -33,7 +33,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace pref="100" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -50,6 +50,8 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
+                          <Component id="viewBtn" min="-2" pref="200" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="deleteExam" max="32767" attributes="0"/>
                               <Component id="saveOnly" alignment="0" pref="190" max="32767" attributes="0"/>
@@ -84,13 +86,14 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="saveOnly" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="editQuestions" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="viewBtn" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="closeBtn" pref="60" max="32767" attributes="0"/>
                       <Component id="deleteExam" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="70" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -185,6 +188,14 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteExamActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="viewBtn">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Comic Sans MS" size="20" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="View Questions"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
