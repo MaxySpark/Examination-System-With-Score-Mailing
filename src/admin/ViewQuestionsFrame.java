@@ -5,6 +5,14 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author maxyspark
@@ -16,8 +24,16 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
      */
     public ViewQuestionsFrame() {
         initComponents();
+        customInit();
     }
 
+    public ViewQuestionsFrame(int id) {
+        this.selectedId = id;
+        initComponents();
+        customInit();
+        loadQuestions();
+    }    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,13 +45,15 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        questionTable = new javax.swing.JTable();
+        heading = new javax.swing.JLabel();
+        closeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        questionTable.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
+        questionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -47,7 +65,7 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -58,9 +76,24 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(questionTable);
+        if (questionTable.getColumnModel().getColumnCount() > 0) {
+            questionTable.getColumnModel().getColumn(0).setMinWidth(55);
+            questionTable.getColumnModel().getColumn(0).setMaxWidth(55);
+            questionTable.getColumnModel().getColumn(6).setMinWidth(60);
+            questionTable.getColumnModel().getColumn(6).setMaxWidth(60);
+        }
 
-        jLabel1.setText("jLabel1");
+        heading.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
+        heading.setText("EXAM");
+
+        closeBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        closeBtn.setText("Close");
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,16 +103,22 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(heading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(closeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -88,45 +127,64 @@ public class ViewQuestionsFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewQuestionsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        this.dispose();
+        ExamQuesionAddFrame eqaf = new ExamQuesionAddFrame(selectedId);
+        eqaf.setVisible(true);
+    }//GEN-LAST:event_closeBtnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewQuestionsFrame().setVisible(true);
-            }
-        });
+
+    
+    // load questions
+    
+    private void loadQuestions() {
+        Connection c = null;
+        Statement s;
+                  try {
+               
+                    Class.forName("com.mysql.jdbc.Driver");
+                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                    s=c.createStatement();
+                    int row = 0;
+//                    int x=0;
+                   ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
+                   r.next();
+                   heading.setText(r.getString("TITLE"));                  
+                   ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId); 
+                   while(rs.next()) {
+                        ((DefaultTableModel)questionTable.getModel()).addRow(new Object[]{});
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getInt("ID"), row, 0);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("Q"), row, 1);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("A"), row, 2);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("B"), row, 3);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("C"), row, 4);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("D"), row, 5);
+                        ((DefaultTableModel)questionTable.getModel()).setValueAt(rs.getString("CA"), row, 6);
+                   
+                        row++;
+                   }
+
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+                } finally {                    
+                    try{c.close();}catch(Exception e){}
+                }  
     }
+    
+    // custom init
+    
+    final public void customInit(){
+        this.setLocationRelativeTo(null);
+        heading.setHorizontalAlignment(JLabel.CENTER);
+    }
+    
+    int selectedId;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton closeBtn;
+    private javax.swing.JLabel heading;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable questionTable;
     // End of variables declaration//GEN-END:variables
 }

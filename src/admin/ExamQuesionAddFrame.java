@@ -107,6 +107,11 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
 
         viewBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         viewBtn.setText("View Questions");
+        viewBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -263,6 +268,12 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
         EditQuestionsFrame eqf = new EditQuestionsFrame(selectedId);
         eqf.setVisible(true);
     }//GEN-LAST:event_editQuestionsActionPerformed
+
+    private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
+        this.dispose();
+        ViewQuestionsFrame vqf = new ViewQuestionsFrame(selectedId);
+        vqf.setVisible(true);
+    }//GEN-LAST:event_viewBtnActionPerformed
 
     // load exam list
     

@@ -343,7 +343,7 @@ public class ExamManagementFrame extends javax.swing.JFrame {
 
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-                } finally {
+                } finally {                    
                     try{c.close();}catch(Exception e){}
                 }  
     }
