@@ -304,6 +304,7 @@ public class EditQuestionsFrame extends javax.swing.JFrame {
                     s.executeUpdate("INSERT INTO EXAM_"+selectedId+" VALUES("+QN+",'"+Q+"','"+A+"','"+B+"','"+C+"','"+D+"','"+CA+"')");
                 }
                 if(currentRow==totalQuestion) {
+                    cancelBtn.setText("Close");
                     nextBtn.setEnabled(false);
                 } else
                     currentRow += 1;
