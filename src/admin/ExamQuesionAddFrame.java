@@ -9,10 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -227,6 +225,33 @@ public class ExamQuesionAddFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteExamActionPerformed
 
     private void editQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQuestionsActionPerformed
+        String title = examTitle.getText();
+        int total;
+        try {
+            totalQuestion.commitEdit();
+        } catch ( java.text.ParseException e ) {  }
+        total = (Integer) totalQuestion.getValue();
+        Connection c = null;
+        Statement s;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+            s=c.createStatement();
+
+            s.executeUpdate("UPDATE EXAMS SET TITLE='"+title+"',TOTALQUESTION="+total+" WHERE ID="+selectedId);
+            JOptionPane.showMessageDialog(this, "Exam Title and Total Question Updated","Update",JOptionPane.INFORMATION_MESSAGE);
+           //Query
+            ResultSet rs = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
+            if(rs.next()) {
+               examTitle.setText(rs.getString("TITLE"));
+               totalQuestion.setValue(rs.getInt("TOTALQUESTION"));
+            }
+
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try{c.close();}catch(Exception e){}
+        } 
         this.dispose();
         EditQuestionsFrame eqf = new EditQuestionsFrame(selectedId);
         eqf.setVisible(true);
