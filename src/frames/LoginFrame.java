@@ -5,8 +5,10 @@
  */
 package frames;
 
+import student.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
 public class LoginFrame extends javax.swing.JFrame {
     
     RegisterFrame rf = new RegisterFrame(this);
-    
+    ShowQuestionsFrame sq = new ShowQuestionsFrame();
     /**
      * Creates new form Login
      */
@@ -66,9 +68,19 @@ public class LoginFrame extends javax.swing.JFrame {
 
         passLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         passLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        passLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passLoginActionPerformed(evt);
+            }
+        });
 
         emailLogin.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         emailLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        emailLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailLoginActionPerformed(evt);
+            }
+        });
 
         loginBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         loginBtn.setText("Login");
@@ -139,35 +151,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        String email,pass;
-        String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        email = emailLogin.getText();
-        pass = passLogin.getText();
-        Connection c = null;
-        Statement s;
-        if(email.matches(EMAIL_REGEX)) {
-            if(!email.trim().equals("")&&!pass.trim().equals("")) {
-                 try {
-//                    dispose();
-//                    F.setVisible(true);
-                    Class.forName("com.mysql.jdbc.Driver");
-                    c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
-                    s=c.createStatement();
-                    
-                   //Query
-                    
-                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
-
-                } catch(Exception e) {
-                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-                } finally {
-                    try{c.close();}catch(Exception e){}
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please Check The Email","Login Error",JOptionPane.ERROR_MESSAGE);
-        }
-        
+        loginDone();
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
@@ -182,6 +166,14 @@ public class LoginFrame extends javax.swing.JFrame {
         mf.setVisible(true);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
+    private void emailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailLoginActionPerformed
+        passLogin.requestFocus();
+    }//GEN-LAST:event_emailLoginActionPerformed
+
+    private void passLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passLoginActionPerformed
+        loginDone();
+    }//GEN-LAST:event_passLoginActionPerformed
+
     // custom init
     
     final public void customInit() {
@@ -190,6 +182,44 @@ public class LoginFrame extends javax.swing.JFrame {
         emailLogin.setHorizontalAlignment(JLabel.CENTER);
         passLogin.setHorizontalAlignment(JLabel.CENTER);
     }
+    
+    
+    final public void loginDone() {
+        String email,pass;
+        String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        email = emailLogin.getText();
+        pass = passLogin.getText();
+        Connection c = null;
+        Statement s;
+        if(email.matches(EMAIL_REGEX)) {
+           if(!email.trim().equals("") && !pass.trim().equals("")) {
+            try {
+                
+                Class.forName("com.mysql.jdbc.Driver");
+                c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+                s=c.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM STUDENT WHERE EMAIL='"+email+"' AND PASSWORD='"+pass+"'");
+
+                if(rs.next()) {
+                    System.out.println(rs.getString(1));
+                    dispose();
+                    sq.setVisible(true);
+//                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Incorrect Username or Password","Login Error",JOptionPane.ERROR_MESSAGE);
+                }
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    try{c.close();}catch(Exception e){}
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Check The Email or Password","Login Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelBtn;
