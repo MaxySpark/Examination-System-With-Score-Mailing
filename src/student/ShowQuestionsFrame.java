@@ -5,6 +5,7 @@
  */
 package student;
 
+import exam.*;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,6 +36,13 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         nextQuestions();
     }
     
+    public ShowQuestionsFrame(String email) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.email = email;
+        customInit();
+        nextQuestions();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,6 +74,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         tMin = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         tSec = new javax.swing.JTextField();
+        submitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -174,6 +183,14 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         tSec.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
         tSec.setText("0");
 
+        submitBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        submitBtn.setText("Submit");
+        submitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -211,18 +228,22 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(question)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(aOption, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(bOption)
                             .addComponent(cOption)
                             .addComponent(dOption)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(292, 292, 292)
-                                .addComponent(prevBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(nextBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(aOption, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(prevBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(nextBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(100, 100, 100))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,11 +280,13 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(dOption, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(80, 80, 80)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(prevBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                    .addComponent(nextBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(60, 60, 60))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prevBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
         );
 
         getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
@@ -272,6 +295,9 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        if(ans.size()<currentRow-1) {
+            ans.add("NA");
+        }
         nextQuestions();
     }//GEN-LAST:event_nextBtnActionPerformed
 
@@ -284,6 +310,16 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         bOption.setBackground(defColor);
         cOption.setBackground(defColor);
         dOption.setBackground(defColor);
+        System.out.println(ans.size());
+        System.out.println(currentRow);
+
+        if(ans.size()<currentRow-1) {
+            ans.add("A");
+        } else {
+            ans.set(currentRow-2,"A");
+        }
+        
+        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_aOptionMouseClicked
 
     private void bOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bOptionMouseClicked
@@ -291,6 +327,16 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         cOption.setBackground(defColor);
         dOption.setBackground(defColor);
+        System.out.println(ans.size());
+        System.out.println(currentRow);
+
+        if(ans.size()<currentRow-1) {
+            ans.add("B");
+        } else {
+            ans.set(currentRow-2,"B");
+        }
+        
+        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_bOptionMouseClicked
 
     private void cOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cOptionMouseClicked
@@ -298,6 +344,16 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         bOption.setBackground(defColor);
         dOption.setBackground(defColor);
+        System.out.println(ans.size());
+        System.out.println(currentRow);
+
+        if(ans.size()<currentRow-1) {
+            ans.add("C");
+        } else {
+            ans.set(currentRow-2,"C");
+        }
+        
+        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_cOptionMouseClicked
 
     private void dOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dOptionMouseClicked
@@ -305,7 +361,27 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         bOption.setBackground(defColor);
         cOption.setBackground(defColor);
+        System.out.println(ans.size());
+        System.out.println(currentRow);
+
+        if(ans.size()<currentRow-1) {
+            ans.add("D");
+        } else {
+            ans.set(currentRow-2,"D");
+        }
+        
+        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_dOptionMouseClicked
+
+    private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
+        if(ans.size()<currentRow-1) {
+            ans.add("NA");
+        }
+        
+        Result result = new Result(ans,examId,email,totalQuestion);
+        result.getAns();
+//        result.checkAns();
+    }//GEN-LAST:event_submitBtnActionPerformed
 
     // load exam list
     
@@ -461,6 +537,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     int examId = 0;    
     int examTime = 0;
     int sec = 59;
+    String email;
     ArrayList<String> ans = new ArrayList<String>();
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -483,6 +560,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     private javax.swing.JButton prevBtn;
     private javax.swing.JTextField question;
     private javax.swing.JTextField questionNumber;
+    private javax.swing.JButton submitBtn;
     private javax.swing.JTextField tMin;
     private javax.swing.JTextField tSec;
     // End of variables declaration//GEN-END:variables

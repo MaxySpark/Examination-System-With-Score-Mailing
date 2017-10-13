@@ -7,14 +7,14 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 public class Mail {
-    String from,pass,to,sub,msg;
+    String from = "maxyspark@gmail.com";
+    String pass = "";
+    String sub = "Exam Control : Result";
+    String to,msg;
       
-    public Mail(String from,String pass,String to,String sub, String msg) {
-        this.from = from;
-        this.pass = pass;
+    public Mail(String to,String exam,int score) {
         this.to = to;
-        this.sub = sub;
-        this.msg = msg;
+        this.msg = "You Have Got : "+score+"% in The Following Exam\n" + exam +"\n\nThank You- \n Exam Control";
         init();
     }
     

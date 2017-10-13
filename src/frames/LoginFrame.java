@@ -201,7 +201,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 ResultSet rs = s.executeQuery("SELECT * FROM STUDENT WHERE EMAIL='"+email+"' AND PASSWORD='"+pass+"'");
 
                 if(rs.next()) {
-                    ShowQuestionsFrame sq = new ShowQuestionsFrame();
+                    ShowQuestionsFrame sq = new ShowQuestionsFrame(email);
                     System.out.println(rs.getString(1));
                     dispose();
                     sq.setVisible(true);
