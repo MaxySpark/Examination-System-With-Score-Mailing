@@ -82,7 +82,7 @@
                               <Component id="dOption" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="292" max="-2" attributes="0"/>
-                                  <Component id="cancelBtn" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="prevBtn" min="-2" pref="157" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="nextBtn" max="32767" attributes="0"/>
                               </Group>
@@ -136,7 +136,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cancelBtn" pref="49" max="32767" attributes="0"/>
+                      <Component id="prevBtn" pref="49" max="32767" attributes="0"/>
                       <Component id="nextBtn" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
@@ -263,6 +263,9 @@
               <Font name="Courier 10 Pitch" size="20" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="aOptionMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="bOption">
           <Properties>
@@ -271,6 +274,9 @@
               <Font name="Courier 10 Pitch" size="20" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bOptionMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="cOption">
           <Properties>
@@ -279,6 +285,9 @@
               <Font name="Courier 10 Pitch" size="20" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cOptionMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="dOption">
           <Properties>
@@ -287,6 +296,9 @@
               <Font name="Courier 10 Pitch" size="20" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="dOptionMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="nextBtn">
           <Properties>
@@ -299,7 +311,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="cancelBtn">
+        <Component class="javax.swing.JButton" name="prevBtn">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="18" style="1"/>
@@ -307,7 +319,7 @@
             <Property name="text" type="java.lang.String" value="Prev"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prevBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">

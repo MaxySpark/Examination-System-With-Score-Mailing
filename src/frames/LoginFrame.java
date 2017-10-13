@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class LoginFrame extends javax.swing.JFrame {
     
     RegisterFrame rf = new RegisterFrame(this);
-    ShowQuestionsFrame sq = new ShowQuestionsFrame();
+    
     /**
      * Creates new form Login
      */
@@ -201,6 +201,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 ResultSet rs = s.executeQuery("SELECT * FROM STUDENT WHERE EMAIL='"+email+"' AND PASSWORD='"+pass+"'");
 
                 if(rs.next()) {
+                    ShowQuestionsFrame sq = new ShowQuestionsFrame();
                     System.out.println(rs.getString(1));
                     dispose();
                     sq.setVisible(true);

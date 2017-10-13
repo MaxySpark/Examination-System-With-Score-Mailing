@@ -5,14 +5,19 @@
  */
 package student;
 
-import admin.*;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimerTask;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.util.Timer;
+import javax.swing.UIManager;
 
 /**
  *
@@ -27,15 +32,9 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         customInit();
+        nextQuestions();
     }
     
-    public ShowQuestionsFrame(int id) {
-        this.selectedId = id;
-        initComponents();
-        this.setLocationRelativeTo(null);
-        customInit();
-        loadQuestions();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,7 +61,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         cOption = new javax.swing.JTextField();
         dOption = new javax.swing.JTextField();
         nextBtn = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
+        prevBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         tMin = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -114,15 +113,35 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
 
         aOption.setEditable(false);
         aOption.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
+        aOption.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aOptionMouseClicked(evt);
+            }
+        });
 
         bOption.setEditable(false);
         bOption.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
+        bOption.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bOptionMouseClicked(evt);
+            }
+        });
 
         cOption.setEditable(false);
         cOption.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
+        cOption.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cOptionMouseClicked(evt);
+            }
+        });
 
         dOption.setEditable(false);
         dOption.setFont(new java.awt.Font("Courier 10 Pitch", 1, 20)); // NOI18N
+        dOption.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dOptionMouseClicked(evt);
+            }
+        });
 
         nextBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         nextBtn.setText("Next");
@@ -132,11 +151,11 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
             }
         });
 
-        cancelBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        cancelBtn.setText("Prev");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+        prevBtn.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        prevBtn.setText("Prev");
+        prevBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
+                prevBtnActionPerformed(evt);
             }
         });
 
@@ -200,7 +219,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                             .addComponent(dOption)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(292, 292, 292)
-                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(prevBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(nextBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(100, 100, 100))
@@ -242,7 +261,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(prevBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                     .addComponent(nextBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(60, 60, 60))
         );
@@ -253,73 +272,118 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-//        String Q,A,B,C,D,QN;
-//        QN = questionNumber.getText();
-//        Q = question.getText();
-//        A = aOption.getText();
-//        B = bOption.getText();
-//        C = cOption.getText();
-//        D = dOption.getText();
-//        Connection c = null;
-//        Statement s;
-//        if(!Q.trim().equals("") && !A.trim().equals("") && !B.trim().equals("") && !C.trim().equals("") && !D.trim().equals("")) {
-//            try {
-//                
-//            } catch(Exception e) {
-//                JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-//            } finally {
-//                try{c.close();}catch(Exception e){}
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Question and Options Can't Be Empty","Edit Question",JOptionPane.ERROR_MESSAGE);
-//        }
-
+        nextQuestions();
     }//GEN-LAST:event_nextBtnActionPerformed
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        this.dispose();
-        ExamQuesionAddFrame eqaf = new ExamQuesionAddFrame(selectedId);
-        eqaf.setVisible(true);
-    }//GEN-LAST:event_cancelBtnActionPerformed
+    private void prevBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevBtnActionPerformed
+        prevQuestions();
+    }//GEN-LAST:event_prevBtnActionPerformed
+
+    private void aOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aOptionMouseClicked
+        aOption.setBackground(Color.green);
+        bOption.setBackground(defColor);
+        cOption.setBackground(defColor);
+        dOption.setBackground(defColor);
+    }//GEN-LAST:event_aOptionMouseClicked
+
+    private void bOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bOptionMouseClicked
+        bOption.setBackground(Color.green);
+        aOption.setBackground(defColor);
+        cOption.setBackground(defColor);
+        dOption.setBackground(defColor);
+    }//GEN-LAST:event_bOptionMouseClicked
+
+    private void cOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cOptionMouseClicked
+        cOption.setBackground(Color.green);
+        aOption.setBackground(defColor);
+        bOption.setBackground(defColor);
+        dOption.setBackground(defColor);
+    }//GEN-LAST:event_cOptionMouseClicked
+
+    private void dOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dOptionMouseClicked
+        dOption.setBackground(Color.green);
+        aOption.setBackground(defColor);
+        bOption.setBackground(defColor);
+        cOption.setBackground(defColor);
+    }//GEN-LAST:event_dOptionMouseClicked
 
     // load exam list
     
-    private void loadQuestions() {
-//        Connection c = null;
-//        Statement s;
-//        try {
-//          Class.forName("com.mysql.jdbc.Driver");
-//          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
-//          s=c.createStatement();
-//
-//         //Query
-////         ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
-////         r.next();
-////         totalQuestion = r.getInt("TOTALQUESTION");
-//
-//         ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+selectedId+" WHERE ID="+currentRow);
-//         if(rs.next()) {
-//              currentRow = rs.getInt("ID");
-//              questionNumber.setText(Integer.toString(currentRow));
-//              question.setText(rs.getString("Q"));
-//              aOption.setText(rs.getString("A"));
-//              bOption.setText(rs.getString("B"));
-//              cOption.setText(rs.getString("C"));
-//              dOption.setText(rs.getString("D"));
-//         } else  {
-//                questionNumber.setText(Integer.toString(currentRow));     
-//                question.setText("");
-//                aOption.setText("");
-//                bOption.setText("");
-//                cOption.setText("");
-//                dOption.setText("");
-//         }
-//
-//      } catch(Exception e) {
-//          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-//      } finally {
-//          try{c.close();}catch(Exception e){}
-//      }  
+    private void nextQuestions() {
+        
+        aOption.setBackground(defColor);
+        bOption.setBackground(defColor);
+        cOption.setBackground(defColor);
+        dOption.setBackground(defColor); 
+        
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
+
+         //Query
+            
+         ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+examId+" WHERE ID="+currentRow);
+         if(rs.next()) {
+              questionNumber.setText(Integer.toString(currentRow));
+              question.setText(rs.getString("Q"));
+              aOption.setText(rs.getString("A"));
+              bOption.setText(rs.getString("B"));
+              cOption.setText(rs.getString("C"));
+              dOption.setText(rs.getString("D"));
+              
+              if(currentRow==totalQuestion) {
+                  nextBtn.setEnabled(false);
+                  prevBtn.setEnabled(true);
+              }
+              currentRow++;
+         } 
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }  
+    }
+    
+    private void prevQuestions() {
+        
+        aOption.setBackground(defColor);
+        bOption.setBackground(defColor);
+        cOption.setBackground(defColor);
+        dOption.setBackground(defColor);        
+        
+        
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
+
+         //Query
+        currentRow--;
+         ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+examId+" WHERE ID="+currentRow);
+         if(rs.next()) {
+              questionNumber.setText(Integer.toString(currentRow));
+              question.setText(rs.getString("Q"));
+              aOption.setText(rs.getString("A"));
+              bOption.setText(rs.getString("B"));
+              cOption.setText(rs.getString("C"));
+              dOption.setText(rs.getString("D"));
+              
+              if(currentRow==1) {
+                  prevBtn.setEnabled(false);
+                  nextBtn.setEnabled(true);
+              }
+              
+         } 
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }  
     }
     
     // custom init
@@ -327,20 +391,57 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     final public void customInit(){
         Connection c = null;
         Statement s;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
-//            s=c.createStatement();
-//            ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+selectedId);
-//            r.next();
-//            totalQuestion = r.getInt("TOTALQUESTION");
-//            System.out.println(totalQuestion);
-//        } catch(Exception e) {
-//            JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
-//        } finally {
-//            try{c.close();}catch(Exception e){}
-//        } 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+            s=c.createStatement();
+            
+            ResultSet ce = s.executeQuery("SELECT * FROM CURRENTEXAM");
+            while(ce.next()) {
+                examId =  ce.getInt("ID");
+                examTime = ce.getInt("TIME");
+                examTime -= 1;
+            }
+            ResultSet r = s.executeQuery("SELECT * FROM EXAMS WHERE ID="+examId);
+            r.next();
+            totalQuestion = r.getInt("TOTALQUESTION");
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try{c.close();}catch(Exception e){}
+        } 
          
+        
+        
+        // Timer
+        
+        Timer timer = new Timer();
+        TimerTask myTask = new TimerTask() {
+        @Override
+            public void run() {
+                tMin.setText(Integer.toString(examTime));
+                tSec.setText(Integer.toString(sec));
+                if(sec==0) {
+                    examTime -= 1;
+                    sec=59;
+                } else{
+                    sec -= 1;
+                }
+                if(examTime==0 && sec==0) {
+                    JOptionPane.showMessageDialog(null, "Times Up","Message",JOptionPane.INFORMATION_MESSAGE);
+                    timer.cancel();
+                    timer.purge();
+                    tMin.setText("00");
+                    tSec.setText("00");
+                    return;  
+                }
+            }
+        };
+
+        timer.schedule(myTask, new Date(), 1000);
+        
+        
          
         heading.setHorizontalAlignment(JLabel.CENTER);
         jLabel8.setHorizontalAlignment(JLabel.CENTER);
@@ -354,15 +455,18 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         dOption.setBorder(BorderFactory.createCompoundBorder(dOption.getBorder(), BorderFactory.createEmptyBorder(8, 5, 8, 5)));
 
     }
+    Color defColor = UIManager.getColor ( "JTextField.background" );
     int totalQuestion;
-    int selectedId;
     int currentRow=1;
-
+    int examId = 0;    
+    int examTime = 0;
+    int sec = 59;
+    ArrayList<String> ans = new ArrayList<String>();
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aOption;
     private javax.swing.JTextField bOption;
     private javax.swing.JTextField cOption;
-    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField dOption;
     private javax.swing.JLabel heading;
     private javax.swing.JLabel jLabel1;
@@ -376,6 +480,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton nextBtn;
+    private javax.swing.JButton prevBtn;
     private javax.swing.JTextField question;
     private javax.swing.JTextField questionNumber;
     private javax.swing.JTextField tMin;
