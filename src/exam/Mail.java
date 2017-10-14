@@ -19,7 +19,7 @@ public class Mail {
     public Mail(String to,String exam,float score) {
         this.to = to;
         this.msg = "You Have Got : "+score+"% in The Following Exam\n" + exam +"\n\nThank You- \n Exam Control";
-        init();
+        loadProfile();
     }
     
     public void init() {
@@ -70,6 +70,7 @@ public class Mail {
           JOptionPane.showMessageDialog(null, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
       } finally {
           try{c.close();}catch(Exception e){}
+            init();
       }  
     }
     

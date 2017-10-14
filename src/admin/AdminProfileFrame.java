@@ -204,7 +204,7 @@ public class AdminProfileFrame extends javax.swing.JFrame {
         user = userName.getText();
         passU = pass.getText();
         email = emailAdmin.getText();
-        passE = pass.getText();
+        passE = ePass.getText();
         Connection c = null;
         Statement s;
         if(email.matches(EMAIL_REGEX) && !user.trim().equals("") && !passU.trim().trim().equals("") && !passE.equals("")) {
