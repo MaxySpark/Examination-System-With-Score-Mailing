@@ -42,7 +42,11 @@ public class Result {
           JOptionPane.showMessageDialog(null, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
       } finally {
           try{c.close();}catch(Exception e){}
-          
+          if(ans.size()<cAns.size()) {
+              for(int i=ans.size();i<=cAns.size();i++) {
+                  ans.add("NA");
+              }
+          }
           checkAns();
       } 
     }
@@ -55,7 +59,7 @@ public class Result {
         sendMail();
     }
     public void sendMail(){
-        int p = (correctCount/totalQuestion)*100;
+        float p = ((float)correctCount/(float)totalQuestion)*100;
         Mail mail = new Mail(email, "Math", p);
     }
     ArrayList<String> ans;

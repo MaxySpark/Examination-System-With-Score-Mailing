@@ -310,16 +310,13 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         bOption.setBackground(defColor);
         cOption.setBackground(defColor);
         dOption.setBackground(defColor);
-        System.out.println(ans.size());
-        System.out.println(currentRow);
 
         if(ans.size()<currentRow-1) {
             ans.add("A");
         } else {
             ans.set(currentRow-2,"A");
         }
-        
-        System.out.println(ans.get(currentRow-2));
+
     }//GEN-LAST:event_aOptionMouseClicked
 
     private void bOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bOptionMouseClicked
@@ -327,16 +324,13 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         cOption.setBackground(defColor);
         dOption.setBackground(defColor);
-        System.out.println(ans.size());
-        System.out.println(currentRow);
 
         if(ans.size()<currentRow-1) {
             ans.add("B");
         } else {
             ans.set(currentRow-2,"B");
         }
-        
-        System.out.println(ans.get(currentRow-2));
+
     }//GEN-LAST:event_bOptionMouseClicked
 
     private void cOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cOptionMouseClicked
@@ -344,8 +338,6 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         bOption.setBackground(defColor);
         dOption.setBackground(defColor);
-        System.out.println(ans.size());
-        System.out.println(currentRow);
 
         if(ans.size()<currentRow-1) {
             ans.add("C");
@@ -353,7 +345,6 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
             ans.set(currentRow-2,"C");
         }
         
-        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_cOptionMouseClicked
 
     private void dOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dOptionMouseClicked
@@ -361,36 +352,27 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
         aOption.setBackground(defColor);
         bOption.setBackground(defColor);
         cOption.setBackground(defColor);
-        System.out.println(ans.size());
-        System.out.println(currentRow);
-
+        
         if(ans.size()<currentRow-1) {
             ans.add("D");
         } else {
             ans.set(currentRow-2,"D");
         }
         
-        System.out.println(ans.get(currentRow-2));
     }//GEN-LAST:event_dOptionMouseClicked
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         if(ans.size()<currentRow-1) {
             ans.add("NA");
         }
-        
-        Result result = new Result(ans,examId,email,totalQuestion);
-        result.getAns();
-//        result.checkAns();
+        submitFlag = 1;
+        disableComp();
+        evaluate();
     }//GEN-LAST:event_submitBtnActionPerformed
 
     // load exam list
     
     private void nextQuestions() {
-        
-        aOption.setBackground(defColor);
-        bOption.setBackground(defColor);
-        cOption.setBackground(defColor);
-        dOption.setBackground(defColor); 
         
         Connection c = null;
         Statement s;
@@ -415,6 +397,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                   prevBtn.setEnabled(true);
               }
               currentRow++;
+              setAnsColor();
          } 
       } catch(Exception e) {
           JOptionPane.showMessageDialog(this, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
@@ -423,13 +406,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
       }  
     }
     
-    private void prevQuestions() {
-        
-        aOption.setBackground(defColor);
-        bOption.setBackground(defColor);
-        cOption.setBackground(defColor);
-        dOption.setBackground(defColor);        
-        
+    private void prevQuestions() {     
         
         Connection c = null;
         Statement s;
@@ -440,6 +417,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
 
          //Query
         currentRow--;
+        setAnsColor();
          ResultSet rs = s.executeQuery("SELECT * FROM EXAM_"+examId+" WHERE ID="+currentRow);
          if(rs.next()) {
               questionNumber.setText(Integer.toString(currentRow));
@@ -462,6 +440,29 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
       }  
     }
     
+    public void evaluate() {
+        Result result = new Result(ans,examId,email,totalQuestion);
+        result.getAns();
+    }
+    
+    public void disableComp(){
+        aOption.setEnabled(false);
+        bOption.setEnabled(false);
+        cOption.setEnabled(false);
+        dOption.setEnabled(false);
+        prevBtn.setEnabled(false);
+        nextBtn.setEnabled(false);
+        submitBtn.setEnabled(false);
+    
+    }
+    
+    public void setAnsColor(){
+            aOption.setBackground(defColor);
+            bOption.setBackground(defColor);
+            cOption.setBackground(defColor);
+            dOption.setBackground(defColor); 
+
+    }
     // custom init
     
     final public void customInit(){
@@ -504,12 +505,18 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
                 } else{
                     sec -= 1;
                 }
-                if(examTime==0 && sec==0) {
-                    JOptionPane.showMessageDialog(null, "Times Up","Message",JOptionPane.INFORMATION_MESSAGE);
+                if(submitFlag==1 || (examTime==0 && sec==0)) {
+                   
                     timer.cancel();
                     timer.purge();
                     tMin.setText("00");
                     tSec.setText("00");
+                    disableComp();
+                    if(submitFlag==0) {
+                        JOptionPane.showMessageDialog(null, "Times Up","Message",JOptionPane.INFORMATION_MESSAGE);
+                        evaluate();
+                    }
+                    
                     return;  
                 }
             }
@@ -538,6 +545,7 @@ public class ShowQuestionsFrame extends javax.swing.JFrame {
     int examTime = 0;
     int sec = 59;
     String email;
+    int submitFlag = 0;
     ArrayList<String> ans = new ArrayList<String>();
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

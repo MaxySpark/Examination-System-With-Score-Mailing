@@ -1,5 +1,9 @@
 package exam;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -7,12 +11,12 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 public class Mail {
-    String from = "maxyspark@gmail.com";
-    String pass = "";
+    String from;
+    String pass;
     String sub = "Exam Control : Result";
     String to,msg;
       
-    public Mail(String to,String exam,int score) {
+    public Mail(String to,String exam,float score) {
         this.to = to;
         this.msg = "You Have Got : "+score+"% in The Following Exam\n" + exam +"\n\nThank You- \n Exam Control";
         init();
@@ -44,6 +48,29 @@ public class Mail {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
             
+    }
+    
+    public void loadProfile() {
+        Connection c = null;
+        Statement s;
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+          c=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ExamManagement","root","");
+          s=c.createStatement();
+
+         ResultSet rs = s.executeQuery("SELECT * FROM EMAIL");
+         if(rs.next()) {
+              
+              from = rs.getString("EMAIL");
+              pass = rs.getString("PASSWORD");
+              
+         }
+
+      } catch(Exception e) {
+          JOptionPane.showMessageDialog(null, e.getMessage(),"Exception",JOptionPane.ERROR_MESSAGE);
+      } finally {
+          try{c.close();}catch(Exception e){}
+      }  
     }
     
 }

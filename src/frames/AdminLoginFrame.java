@@ -18,9 +18,7 @@ import javax.swing.JOptionPane;
  * @author maxyspark
  */
 public class AdminLoginFrame extends javax.swing.JFrame {
-    
-    AdminDashboardFrame ad = new AdminDashboardFrame();
-    
+        
     /**
      * Creates new form Login
      */
@@ -178,6 +176,7 @@ public class AdminLoginFrame extends javax.swing.JFrame {
                 if(rs.next()) {
                     System.out.println(rs.getString(1));
                     dispose();
+                    AdminDashboardFrame ad = new AdminDashboardFrame(username,password);
                     ad.setVisible(true);
 //                    JOptionPane.showMessageDialog(this, "Login Successful","Message",JOptionPane.INFORMATION_MESSAGE);
                 } else {
